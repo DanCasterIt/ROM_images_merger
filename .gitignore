@@ -4,5 +4,5 @@
 !.gitignore
 !.README.md
 !.LICENSE
-!.512k_image_generator.c
-!.512k_image_generator.exe
+!.ROM_image_generator.c
+!.ROM_image_generator.exe
