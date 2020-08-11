@@ -26,18 +26,18 @@ ROM_image_generator DFSimage EDITROM basiced
 Please, specify the memory size in bytes. (0 for 65536): 0
 Please, specify the number of equally sized partitions. (0 for 4): 0
 Found 3 files. Choose where to place them.
-partition 3 @ 0x0000-0x3FFF filled with ones
-partition 2 @ 0x4000-0x7FFF filled with file: basiced
-partition 1 @ 0x8000-0xBFFF filled with file: EDITROM
-partition 0 @ 0xC000-0xFFFF filled with file: DFSimage
+partition 3 @ 0x00000000-0x00003FFF filled with ones
+partition 2 @ 0x00004000-0x00007FFF filled with file: basiced
+partition 1 @ 0x00008000-0x0000BFFF filled with file: EDITROM
+partition 0 @ 0x0000C000-0x0000FFFF filled with file: DFSimage
 Apply changes? (y or n): n
 Please, select which partition to swap.
-Partition number: 3
-goes to number: 2
-partition 3 @ 0x0000-0x3FFF filled with file: basiced
-partition 2 @ 0x4000-0x7FFF filled with ones
-partition 1 @ 0x8000-0xBFFF filled with file: EDITROM
-partition 0 @ 0xC000-0xFFFF filled with file: DFSimage
+Partition number: 1
+goes to number: 3
+partition 3 @ 0x00000000-0x00003FFF filled with file: EDITROM
+partition 2 @ 0x00004000-0x00007FFF filled with file: basiced
+partition 1 @ 0x00008000-0x0000BFFF filled with ones
+partition 0 @ 0x0000C000-0x0000FFFF filled with file: DFSimage
 Apply changes? (y or n): y
 Writing "ROM_image.bin"...
 ```
