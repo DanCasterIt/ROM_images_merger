@@ -6,16 +6,6 @@
 #define PARTITIONS_NUMBER	4
 #define INC					(ROM_SIZE/PARTITIONS_NUMBER)
 
-#define sOFFSET1 0
-#define sOFFSET2 INC
-#define sOFFSET3 2*INC
-#define sOFFSET4 3*INC
-
-#define eOFFSET1 sOFFSET2-1
-#define eOFFSET2 sOFFSET3-1
-#define eOFFSET3 sOFFSET4-1
-#define eOFFSET4 ROM_SIZE - 1
-
 typedef struct partitions_s	{
 	uint16_t start;
 	uint16_t end;
@@ -27,13 +17,13 @@ int main(int argc, char *argv[])	{
 	FILE *fdin, *fdout;
 	char *tmp, ch = 'n';
 	int i, a, b;
-	partitions_t part[] = {
-		{sOFFSET4, eOFFSET4, NULL},
-		{sOFFSET3, eOFFSET3, NULL},
-		{sOFFSET2, eOFFSET2, NULL},
-		{sOFFSET1, eOFFSET1, NULL}
-	};
+	partitions_t part[PARTITIONS_NUMBER];
 	if(!(argc <= PARTITIONS_NUMBER + 1) || !(argc > 1)) return -1;
+	for(i = 0; i < PARTITIONS_NUMBER; i++)	{
+		part[PARTITIONS_NUMBER - 1 - i].start = i * INC;
+		part[PARTITIONS_NUMBER - 1 - i].end = (part[i].start + INC) - 1;
+		part[PARTITIONS_NUMBER - 1 - i].name = NULL;
+	}
 	for(i = 1; i < argc; i++)	part[i - 1].name = argv[i];
 	printf("Found %d files. Choose where to place them.\n", argc - 1);
 	while(ch != 'y')	{
@@ -61,16 +51,14 @@ int main(int argc, char *argv[])	{
 	fdout = fopen("512k_ROM_image.bin", "wb");
 	if(fdout == NULL) return -1;
 	for(i = PARTITIONS_NUMBER - 1; i >= 0; i--)	{
+		memset((void*)buffer, 0xFF, INC);
 		if(part[i].name != NULL)	{
 			fdin = fopen(part[i].name, "rb");
 			if(fdin == NULL) return -1;
 			if(fread((void*)buffer, 1, INC, fdin) <= 0) return -1;
 			if(fwrite((void*)buffer, 1, INC, fdout) <= 0) return -1;
 			fclose(fdin);
-		} else	{
-			memset((void*)buffer, 0xFF, INC);
-			if(fwrite((void*)buffer, 1, INC, fdout) <= 0) return -1;
-		}
+		} else	if(fwrite((void*)buffer, 1, INC, fdout) <= 0) return -1;
 	}
 	fclose(fdout);
 	return 0;
