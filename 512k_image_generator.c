@@ -38,9 +38,9 @@ int main(int argc, char *argv[])	{
 	printf("Found %d files. Choose where to place them.\n", argc - 1);
 	while(ch != 'y')	{
 		for(i = PARTITIONS_NUMBER - 1; i >= 0; i--)	{
-			printf("partition %d, ", i);
-			if(part[i].name != NULL)	printf("@ 0x%04X-0x%04X\tfile: %s\n", part[i].start, part[i].end, part[i].name);
-			else	printf("@ 0x%04X-0x%04X\tones\n", part[i].start, part[i].end);
+			printf("partition %d ", i);
+			if(part[i].name != NULL)	printf("@ 0x%04X-0x%04X filled with file: %s\n", part[i].start, part[i].end, part[i].name);
+			else	printf("@ 0x%04X-0x%04X filled with ones\n", part[i].start, part[i].end);
 		}
 		printf("Apply changes? (y or n): ");
 		ch = getch();
