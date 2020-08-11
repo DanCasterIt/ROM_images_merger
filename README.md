@@ -25,8 +25,9 @@ It works both in Linux and Windows. A 32-bit Windows binary is provided in this 
 ROM_image_generator DFSimage EDITROM basiced
 Please, specify the memory size in bytes. (0 for 65536): 0
 Please, specify the number of equally sized partitions. (0 for 4): 0
+Please, specify if to fill blank partitions with ones (1) or zeros (0): 1
 Found 3 files. Choose where to place them.
-partition 3 @ 0x00000000-0x00003FFF filled with ones
+partition 3 @ 0x00000000-0x00003FFF filled with FFs
 partition 2 @ 0x00004000-0x00007FFF filled with file: basiced
 partition 1 @ 0x00008000-0x0000BFFF filled with file: EDITROM
 partition 0 @ 0x0000C000-0x0000FFFF filled with file: DFSimage
@@ -36,7 +37,7 @@ Partition number: 1
 goes to number: 3
 partition 3 @ 0x00000000-0x00003FFF filled with file: EDITROM
 partition 2 @ 0x00004000-0x00007FFF filled with file: basiced
-partition 1 @ 0x00008000-0x0000BFFF filled with ones
+partition 1 @ 0x00008000-0x0000BFFF filled with FFs
 partition 0 @ 0x0000C000-0x0000FFFF filled with file: DFSimage
 Apply changes? (y or n): y
 Writing "ROM_image.bin"...

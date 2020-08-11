@@ -12,6 +12,7 @@ int main(int argc, char *argv[])	{
 	FILE *fdin, *fdout;
 	char *tmp, ch = 'n';
 	int INC, PARTITIONS_NUMBER, ROM_SIZE, i, a, b;
+	uint8_t filler;
 	printf("Please, specify the memory size in bytes. (0 for 65536): ");
 	scanf("%d", &ROM_SIZE);
 	getchar();
@@ -20,6 +21,14 @@ int main(int argc, char *argv[])	{
 	scanf("%d", &PARTITIONS_NUMBER);
 	getchar();
 	if(PARTITIONS_NUMBER <= 0) PARTITIONS_NUMBER = 4;
+	do	{
+		printf("Please, specify if to fill blank partitions with ones (1) or zeros (0): ");
+		scanf("%d", &filler);
+		getchar();
+		if(filler != 1 && filler != 0)	printf("Please, input 1 or 0.\n");
+	} while(filler != 1 && filler != 0);
+	if(filler == 1) filler = 0xFF;
+	else filler = 0x00;
 	if(!(argc <= PARTITIONS_NUMBER + 1)) return -1;
 	INC = ROM_SIZE/PARTITIONS_NUMBER;
 	uint8_t buffer[INC];
@@ -35,7 +44,7 @@ int main(int argc, char *argv[])	{
 		for(i = PARTITIONS_NUMBER - 1; i >= 0; i--)	{
 			printf("partition %d ", i);
 			if(part[i].name != NULL)	printf("@ 0x%08X-0x%08X filled with file: %s\n", part[i].start, part[i].end, part[i].name);
-			else	printf("@ 0x%08X-0x%08X filled with ones\n", part[i].start, part[i].end);
+			else	printf("@ 0x%08X-0x%08X filled with %02Xs\n", part[i].start, part[i].end, filler);
 		}
 		printf("Apply changes? (y or n): ");
 		scanf("%c", &ch);
@@ -62,7 +71,7 @@ int main(int argc, char *argv[])	{
 	fdout = fopen("ROM_image.bin", "wb");
 	if(fdout == NULL) return -1;
 	for(i = PARTITIONS_NUMBER - 1; i >= 0; i--)	{
-		memset((void*)buffer, 0xFF, INC);
+		memset((void*)buffer, filler, INC);
 		if(part[i].name != NULL)	{
 			fdin = fopen(part[i].name, "rb");
 			if(fdin == NULL) return -1;
