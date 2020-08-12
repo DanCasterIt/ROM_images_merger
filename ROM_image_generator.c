@@ -55,13 +55,13 @@ int main(int argc, char *argv[])	{
 			printf("Partition number: ");
 			scanf("%d", &a);
 			getchar();
-			if(a >= PARTITIONS_NUMBER) printf("Please, insert a number less than %d.\n", PARTITIONS_NUMBER);
+			if(a >= PARTITIONS_NUMBER) printf("Please, input a number less than %d.\n", PARTITIONS_NUMBER);
 		} while(a >= PARTITIONS_NUMBER);
 		do	{
 			printf("goes to number: ", i);
 			scanf("%d", &b);
 			getchar();
-			if(b >= PARTITIONS_NUMBER) printf("Please, insert a number less than %d.\n", PARTITIONS_NUMBER);
+			if(b >= PARTITIONS_NUMBER) printf("Please, input a number less than %d.\n", PARTITIONS_NUMBER);
 		} while(b >= PARTITIONS_NUMBER);
 		tmp = part[a].name;
 		part[a].name = part[b].name;

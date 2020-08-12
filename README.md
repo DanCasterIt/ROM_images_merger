@@ -1,6 +1,5 @@
 # What does this program
-This program creates a file made of n partitions equally sized and puts in these partitions the files specified in the arguments.
-Blank spaces will be filled with 0xFF values.
+This program creates a file made of n partitions equally sized and puts in these partitions the files specified in the arguments. Blank spaces will be filled with 0xFF or 0x00 values.
 The user can choose:
 * which file goes in each partition
 * the lenght of the final image
@@ -22,7 +21,7 @@ It works both in Linux and Windows. A 32-bit Windows binary is provided in this 
 
 # How to use it, example
 ```
-ROM_image_generator DFSimage EDITROM basiced
+> ROM_image_generator DFSimage EDITROM basiced
 Please, specify the memory size in bytes. (0 for 65536): 0
 Please, specify the number of equally sized partitions. (0 for 4): 0
 Please, specify if to fill blank partitions with ones (1) or zeros (0): 1
