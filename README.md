@@ -42,6 +42,9 @@ Apply changes? (y or n): y
 Writing "ROM_image.bin"...
 ```
 
+# Bash script version of this program
+Bash versions of this program plus one that splits a 64Kbyte image into four 16Kbyte images can be found in the `bashVersion/` folder in the root directory of this repository.
+
 # PCB projects I made using this tool
 - [Acorn BBC Master compact cartridge](https://oshwlab.com/black__man/acorn-bbc-master-compact-cartridge)
 - [Acorn BBC Master compact cartridge ZIF ](https://oshwlab.com/black__man/acorn-bbc-master-compact-cartridge_copy)
