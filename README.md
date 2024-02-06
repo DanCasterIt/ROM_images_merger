@@ -15,7 +15,7 @@ Anyway, since W27C512-45Z are four time bigger than D27128 I decided to unplug t
 This tool is thought to merge four 16kbyte ROM images into a sigle one for a 64kbyte ROM but these parameters can be modified.
 
 # How to compile
-gcc ROM_image_generator.c -o ROM_image_generator
+`gcc ROM_image_generator.c -o ROM_image_generator`
 
 It works both in Linux and Windows. A 32-bit Windows binary is provided in this repo.
 
@@ -41,3 +41,8 @@ partition 0 @ 0x0000C000-0x0000FFFF filled with file: DFSimage
 Apply changes? (y or n): y
 Writing "ROM_image.bin"...
 ```
+
+# PCB projects I made using this tool
+- [Acorn BBC Master compact cartridge](https://oshwlab.com/black__man/acorn-bbc-master-compact-cartridge)
+- [Acorn BBC Master compact cartridge ZIF ](https://oshwlab.com/black__man/acorn-bbc-master-compact-cartridge_copy)
+- [Acorn BBC Master Compact 128K system ROM](https://oshwlab.com/black__man/acorn-bbc-master-compact-128k-system-rom)
