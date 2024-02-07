@@ -19,7 +19,8 @@ This tool is thought to merge four 16kbyte ROM images into a sigle one for a 64k
 gcc ROM_image_generator.c -o ROM_image_generator
 ```
 
-It works both in Linux and Windows. A 32-bit Windows binary is provided in this repo.
+Tested in Linux, Windows and MacOS. \
+A 32-bit Windows binary `ROM_image_generator.exe` is provided in this repo toghether with an Apple silicon M1 one `ROM_image_generator.macM1`.
 
 # How to use it, example
 ```
