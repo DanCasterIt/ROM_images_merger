@@ -40,15 +40,13 @@ int main(int argc, char *argv[]) {
   uint8_t buffer[inc];
   partitions_t part[partitions_number];
   for (i = 0; i < partitions_number; i++) {
-    part[partitions_number - 1 - i].start = i * inc;
-    part[partitions_number - 1 - i].end = ((i + 1) * inc) - 1;
-    part[partitions_number - 1 - i].name = NULL;
+    part[i].start = i * inc;
+    part[i].end = ((i + 1) * inc) - 1;
+    part[i].name = (i > argc - 2) ? NULL : argv[i + 1];
   }
-  for (i = 1; i < argc; i++)
-    part[i - 1].name = argv[i];
   printf("Found %d files. Choose where to place them.\n", argc - 1);
   while (ch != 'y') {
-    for (i = partitions_number - 1; i >= 0; i--) {
+    for (i = 0; i < partitions_number; i++) {
       printf("partition %d ", i);
       if (part[i].name != NULL)
         printf("@ 0x%08X-0x%08X filled with file: %s\n", part[i].start,
@@ -85,7 +83,7 @@ int main(int argc, char *argv[]) {
   fdout = fopen("ROM_image.bin", "wb");
   if (fdout == NULL)
     return -1;
-  for (i = partitions_number - 1; i >= 0; i--) {
+  for (i = 0; i < partitions_number; i++) {
     memset((void *)buffer, filler, inc);
     if (part[i].name != NULL) {
       fdin = fopen(part[i].name, "rb");

@@ -23,23 +23,23 @@ It works both in Linux and Windows. A 32-bit Windows binary is provided in this 
 
 # How to use it, example
 ```
-$ ../ROM_image_generator utils basic48 adfs210
+$ ./ROM_image_generator utils basic48 adfs210
 Input the memory size in bytes. (0 for 65536): 0
 Input the number of equally sized partitions. (0 for 4): 0
 Input if to fill blank partitions with ones (1) or zeros (0): 1
 Found 3 files. Choose where to place them.
-partition 3 @ 0x00000000-0x00003FFF filled with FFs
-partition 2 @ 0x00004000-0x00007FFF filled with file: adfs210
-partition 1 @ 0x00008000-0x0000BFFF filled with file: basic48
-partition 0 @ 0x0000C000-0x0000FFFF filled with file: utils
+partition 0 @ 0x00000000-0x00003FFF filled with file: adfs210
+partition 1 @ 0x00004000-0x00007FFF filled with file: basic48
+partition 2 @ 0x00008000-0x0000BFFF filled with file: utils
+partition 3 @ 0x0000C000-0x0000FFFF filled with FFs
 Apply changes? (y or n): n
 Input which partition to swap.
 Partition number: 3
 goes to number: 1
-partition 3 @ 0x00000000-0x00003FFF filled with file: basic48
-partition 2 @ 0x00004000-0x00007FFF filled with file: adfs210
-partition 1 @ 0x00008000-0x0000BFFF filled with FFs
-partition 0 @ 0x0000C000-0x0000FFFF filled with file: utils
+partition 0 @ 0x00000000-0x00003FFF filled with file: adfs210
+partition 1 @ 0x00004000-0x00007FFF filled with FFs
+partition 2 @ 0x00008000-0x0000BFFF filled with file: utils
+partition 3 @ 0x0000C000-0x0000FFFF filled with file: basic48
 Apply changes? (y or n): y
 Writing "ROM_image.bin"...
 ```
