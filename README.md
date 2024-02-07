@@ -45,6 +45,23 @@ Apply changes? (y or n): y
 Writing "ROM_image.bin"...
 ```
 
+Then if using a TL866II+ programmer with the `minipro` command line tool, the immage can be flashed with the command
+```bash
+minipro -s -p "W27C512@DIP28" -w ROM_image.bin
+```
+The `-m` option can be used in place of `-w` to verify that the write process completed correctly. \
+Compatible devices can be listed using the `-L` option like in the following example
+```
+$ minipro -L W27C512
+No TL866 device found. Which database do you want to display?
+1) TL866A
+2) TL866II+
+3) Abort
+2
+W27C512@DIP28
+W27C512@PLCC32
+```
+
 # Bash script version of this program
 Bash versions of this program plus one that splits a 64Kbyte image into four 16Kbyte images can be found in the `bashVersion/` folder in the root directory of this repository.
 
