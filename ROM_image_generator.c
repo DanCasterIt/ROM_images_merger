@@ -3,8 +3,8 @@
 #include <string.h>
 
 typedef struct partitions_s {
-  uint16_t start;
-  uint16_t end;
+  uint32_t start;
+  uint32_t end;
   char *name;
 } partitions_t;
 
