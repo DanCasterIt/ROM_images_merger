@@ -4,5 +4,7 @@
 !.gitignore
 !.README.md
 !.LICENSE
+!.ROM_image_generator_v2.cpp
+!.ROM_image_generator_v2_tester.sh
 !.ROM_image_generator.c
 !.ROM_image_generator.exe
