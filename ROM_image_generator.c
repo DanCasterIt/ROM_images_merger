@@ -13,16 +13,23 @@ int main(int argc, char *argv[]) {
   char *tmp, ch = 'n';
   int inc, partitions_number, rom_size, i, a, b;
   uint8_t filler;
+
   printf("Input the memory size in bytes. (0 for 65536): ");
   scanf("%d", &rom_size);
   getchar();
   if (rom_size <= 0)
     rom_size = 65536;
+
   printf("Input the number of equally sized partitions. (0 for 4): ");
   scanf("%d", &partitions_number);
   getchar();
   if (partitions_number <= 0)
     partitions_number = 4;
+  if (argc > partitions_number + 1) {
+    fprintf(stderr, "ERROR: the number of partitions to merge together (%d) is lower than the number of file passed through the command line (%d).\n", partitions_number, argc - 1 );
+    return -1;
+  }
+
   do {
     printf("Input if to fill blank partitions with ones (1) or zeros (0): ");
     scanf("%hhu", &filler);
@@ -34,8 +41,7 @@ int main(int argc, char *argv[]) {
     filler = 0xFF;
   else
     filler = 0x00;
-  if (argc > partitions_number + 1)
-    return -1;
+
   inc = rom_size / partitions_number;
   uint8_t buffer[inc];
   partitions_t part[partitions_number];
@@ -44,11 +50,12 @@ int main(int argc, char *argv[]) {
     part[i].end = ((i + 1) * inc) - 1;
     part[i].name = (i > argc - 2) ? NULL : argv[i + 1];
   }
+
   printf("Found %d files. Choose where to place them.\n", argc - 1);
   while (ch != 'y') {
     for (i = 0; i < partitions_number; i++) {
       printf("partition %d ", i);
-      if (part[i].name != NULL)
+      if (part[i].name)
         printf("@ 0x%08X-0x%08X filled with file: %s\n", part[i].start,
                part[i].end, part[i].name);
       else
@@ -79,24 +86,43 @@ int main(int argc, char *argv[]) {
     part[a].name = part[b].name;
     part[b].name = tmp;
   }
-  printf("Writing \"ROM_image.bin\"...\n");
-  fdout = fopen("ROM_image.bin", "wb");
-  if (fdout == NULL)
-    return -1;
+
+  char output_file_name[] = "ROM_image.bin";
+  printf("Writing \"%s\"...\n", output_file_name);
+  fdout = fopen(output_file_name, "wb");
+  if (!fdout) {
+    fprintf(stderr, "ERROR: can't open or create \"%s\"\n", output_file_name);
+    goto exit_with_error;
+  }
   for (i = 0; i < partitions_number; i++) {
     memset((void *)buffer, filler, inc);
-    if (part[i].name != NULL) {
+    if (part[i].name) {
       fdin = fopen(part[i].name, "rb");
-      if (fdin == NULL)
-        return -1;
-      if (fread((void *)buffer, 1, inc, fdin) <= 0)
-        return -1;
-      if (fwrite((void *)buffer, 1, inc, fdout) <= 0)
-        return -1;
+      if (!fdin)  {
+        fprintf(stderr, "ERROR: can't open \"%s\", does it exist?\n", part[i].name);
+        goto exit_with_error;
+      }
+      if (fread((void *)buffer, 1, inc, fdin) <= 0) {
+        fprintf(stderr, "ERROR: can't read \"%s\", do we have read permissions?\n", part[i].name);
+        fclose(fdin);
+        goto exit_with_error;
+      }
+      if (fwrite((void *)buffer, 1, inc, fdout) <= 0) {
+        fprintf(stderr, "ERROR: can't write \"%s\", do we have write permissions?\n", output_file_name);
+        fclose(fdin);
+        goto exit_with_error;
+      }
       fclose(fdin);
     } else if (fwrite((void *)buffer, 1, inc, fdout) <= 0)
-      return -1;
+      goto exit_with_error;
   }
+
   fclose(fdout);
   return 0;
+
+exit_with_error:
+  fprintf(stderr, "ERROR: \"%s\" not created or incomplete.\n", output_file_name);
+  if(fdout)
+    fclose(fdout);
+  return -1;
 }
